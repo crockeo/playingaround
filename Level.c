@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "LevelLoader.h"
 
 // Creating a level
 LEVEL* create_level(char* message, char** options, LEVEL** levels, int len)
@@ -17,17 +18,7 @@ LEVEL* create_level(char* message, char** options, LEVEL** levels, int len)
 }
 
 // Loading a level from a file
-LEVEL* load_level(char* path)
-{
-    FILE* fp = fopen(path, "r");
-    if (fp == NULL) return NULL;
-
-    LEVEL* l = (LEVEL*)malloc(1 * sizeof(LEVEL));
-
-    // TODO
-
-    return l;
-}
+LEVEL* load_level(const char* path) { return load_level_from_file(path); }
 
 // Destroying a level
 void destroy_level(LEVEL* level)

@@ -14,7 +14,7 @@ typedef struct LEVEL
 LEVEL* create_level(char* message, char** options, LEVEL** levels, int len);
 
 // Loading a level from a file
-LEVEL* load_level(char* path);
+LEVEL* load_level(const char* path);
 
 // Destroying a level
 void destroy_level(LEVEL* level);
