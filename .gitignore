@@ -1,0 +1,3 @@
+# Keeping compiled binaries from being copied over
+*.o
+*.exe
