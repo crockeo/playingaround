@@ -4,36 +4,54 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class LevelLoader {
-	public static Level loadLevel(String path) {
+	// Reading all lines from a file
+	private static String[] readLines(String path) {
 		BufferedReader r;
+		
+		ArrayList<String> lines = new ArrayList<>();
+		String line;
+		
+		try {
+			r = new BufferedReader(new FileReader(new File(path)));
+			
+			while ((line = r.readLine()) != null)
+				lines.add(line);
+			
+			r.close();
+		} catch (IOException e) { return null; }
+		
+		return (String[])lines.toArray();
+	}
+	
+	// Parse message prefix
+	private static boolean isMessage(String[] ss) { return ss[0].equals(Declares.MESSAGE_PREFIX) && ss.length == 2; }
+	private static String parseMessage(String[] ss) { return ss[1]; }
+	
+	// Parsing for a choice
+	private static boolean isChoice(String[] ss) { return ss[0].equals(Declares.MESSAGE_PREFIX) && ss.length == 2; } 
+	private static String parseChoice(String[] ss) { return ss[1]; }
+	
+	// Parsing for a sublevel
+	private static boolean isSubLevel(String[] ss) { return ss[0].equals(Declares.LEVEL_PREFIX) && ss.length == 2; } 
+	private static Level parseLevel(String[] ss) { if (ss[1] == "end") return null; else return loadLevel(ss[1]); }
+	
+	// Reading a level from a file	
+	public static Level loadLevel(String path) {
+		String[] lines = readLines(path);
+		if (lines == null) return null;
 		
 		String message = "";
 		ArrayList<String> choices = new ArrayList<>();
 		ArrayList<Level> sublevels = new ArrayList<>();
 		
-		try {
-			r = new BufferedReader(new FileReader(new File(path)));
+		for (String s: lines) {
+			String[] ss = s.split(" ");
 			
-			String line;
-			String[] sline;
-			
-			while ((line = r.readLine()) != null) {
-				sline = line.split(" ");
-				if (sline.length != 2)
-					continue;
-				
-				if (sline[0] == Declares.MESSAGE_PREFIX)
-					message = sline[1];
-				else if (sline[0] == Declares.CHOICE_PREFIX)
-					choices.add(sline[1]);
-				else if (sline[0] == Declares.LEVEL_PREFIX)
-					sublevels.add(loadLevel(sline[1]));
-			}
-			
-			r.close();
-		} catch (IOException e) { e.printStackTrace(); return null; }
+			if (isMessage(ss)) message = parseMessage(ss);
+			else if (isChoice(ss)) choices.add(parseChoice(ss));
+			else if (isSubLevel(ss)) sublevels.add(parseLevel(ss));
+		}
 		
-		if (message == "" || choices.size() == 0 || sublevels.size() == 0) return null;	
 		return new Level(message, (String[])choices.toArray(), (Level[])sublevels.toArray());
 	}
 }
