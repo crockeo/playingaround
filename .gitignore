@@ -1,3 +1,7 @@
 # Keeping compiled binaries from being copied over
-*.o
-*.exe
+*.jar
+*.class
+
+# Preventing the addition of eclipse project files
+.classpath
+.project
