@@ -5,7 +5,7 @@ import java.io.*;
 
 public class LevelLoader {
 	// Reading all lines from a file
-	private static String[] readLines(String path) {
+	private String[] readLines(String path) {
 		BufferedReader r;
 		
 		ArrayList<String> lines = new ArrayList<>();
@@ -24,19 +24,19 @@ public class LevelLoader {
 	}
 	
 	// Parse message prefix
-	private static boolean isMessage(String[] ss) { return ss[0].equals(Declares.MESSAGE_PREFIX) && ss.length == 2; }
-	private static String parseMessage(String[] ss) { return ss[1]; }
+	private boolean isMessage(String[] ss) { return ss[0].equals(Declares.MESSAGE_PREFIX) && ss.length == 2; }
+	private String parseMessage(String[] ss) { return ss[1]; }
 	
 	// Parsing for a choice
-	private static boolean isChoice(String[] ss) { return ss[0].equals(Declares.MESSAGE_PREFIX) && ss.length == 2; } 
-	private static String parseChoice(String[] ss) { return ss[1]; }
+	private boolean isChoice(String[] ss) { return ss[0].equals(Declares.MESSAGE_PREFIX) && ss.length == 2; } 
+	private String parseChoice(String[] ss) { return ss[1]; }
 	
 	// Parsing for a sublevel
-	private static boolean isSubLevel(String[] ss) { return ss[0].equals(Declares.LEVEL_PREFIX) && ss.length == 2; } 
-	private static Level parseLevel(String[] ss) { if (ss[1] == "end") return null; else return loadLevel(ss[1]); }
+	private boolean isSubLevel(String[] ss) { return ss[0].equals(Declares.LEVEL_PREFIX) && ss.length == 2; } 
+	private Level parseLevel(String[] ss) { if (ss[1] == "end") return null; else return loadLevel(ss[1]); }
 	
 	// Reading a level from a file	
-	public static Level loadLevel(String path) {
+	public Level loadLevel(String path) {
 		String[] lines = readLines(path);
 		if (lines == null) return null;
 		
@@ -53,5 +53,17 @@ public class LevelLoader {
 		}
 		
 		return new Level(message, (String[])choices.toArray(), (Level[])sublevels.toArray());
+	}
+	
+	// Singleton
+	private LevelLoader() { }
+	
+	public final Object clone() { return null; }
+	
+	private static LevelLoader instance;
+	public static LevelLoader instance() {
+		if (instance == null)
+			instance = new LevelLoader();
+		return instance;
 	}
 }

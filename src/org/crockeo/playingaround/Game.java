@@ -7,7 +7,7 @@ public class Game {
 	private boolean running = false;
 
 	// Starting and stopping
-	public void start(String loadpath) { running = true; gameLoop(LevelLoader.loadLevel(loadpath)); }
+	public void start(String loadpath) { running = true; gameLoop(LevelLoader.instance().loadLevel(loadpath)); }
 	public void stop() { running = false; }
 	
 	// Accessors
