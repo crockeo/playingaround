@@ -5,12 +5,15 @@ import System.Directory
 
 import qualified Game
 
-fileName = "Test.lvl"
+configLoc = "config.cfg"
+
+-- Loading the filename from a file string
+loadFileName :: FilePath -> IO String
+loadFileName path = readFile FilePath
 
 main :: IO Int
 main = do
-  fileExists <- doesFileExist fileName
-
-  if fileExists
-      then Game.start fileName
-      else return 1
+  exists <- doesFileExist configLoc
+  if exists
+    then (loadFileName configLoc) >>= Game.start
+    else return 1
