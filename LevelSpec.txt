@@ -1,0 +1,68 @@
+(( Specification for LEVEL definition ))
+
+1. Overview
+ Each LEVEL has 4 elements:
+  * The message
+  * The choices
+  * The sub-LEVELs
+  * The length
+
+ The length is defined by the parsing of the choices/sub-LEVELs.
+ If the length of the choices and sub-LEVELs are not equal, then
+ the program will quit.
+
+2. The rendering of a LEVEL
+ A hypothetical level with 2 choices, and two corresponding levels
+ would render out as such:
+
+ "<message>
+
+ 1. <choice #1>
+ 2. <choice #2>
+
+ : <Waiting for user input>"
+
+3. Defining the message
+ In order to define the message that will be printed out when a
+ LEVEL is rendered, you must use the 'msg' keyword.
+
+ In a level file, specify the msg as such:
+
+ "msg <level message>"
+
+ Do not break the message up with newline characters, for that's bad news
+ bears and will trip up the parser.
+
+4. Defining the choices
+ In order to define the choices of a given LEVEL you must use the
+ 'chc' keyword.
+
+ It is used as such:
+
+ "chc <message>"
+
+ The index of a choice is defined by where the choice was declared within
+ the LEVEL file. For instance, with a slice of a level file (assuming no
+ more choice definitions exist outside of the slice) such as this:
+
+ "chc Rawr
+  chc Rawr2"
+
+ The resulting LEVEL render would be something like:
+
+ "<message>
+
+ 1. Rawr
+ 2. Rawr2
+
+ : <Waiting for user input>"
+
+4. Defining the sub-LEVELs
+ To define a sublevel you must merely use the 'lvl' keyword along with the
+ path to a sub-LEVEL. Keep in mind that if there is any sort of recursion
+ the parsing will be an infinite loop.
+
+ Usage: "lvl <path>"
+
+5. Nothing
+ Aaaaaaand we're done here.
