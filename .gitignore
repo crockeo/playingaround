@@ -1,0 +1,7 @@
+# Ignoring compiled binaries/objects
+*.exe
+*.o
+*.hi
+
+# Ignoring test levels
+*.lvl
