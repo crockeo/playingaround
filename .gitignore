@@ -3,5 +3,8 @@
 *.o
 *.hi
 
+# Ignoring config files
+*.cfg
+
 # Ignoring test levels
 *.lvl
