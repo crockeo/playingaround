@@ -6,7 +6,7 @@ import Level
 drawMessage :: Level -> IO ()
 drawMessage level = do
   putStrLn "\n\n"
-  putStrLn $ getMessag level
+  putStrLn $ getMessage level
 
 -- Drawing all choices
 drawChoices :: [String] -> Int -> IO ()
