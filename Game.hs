@@ -23,7 +23,7 @@ gameLoop :: Level -> IO Int
 gameLoop (Level msg _ _ True) = do
   if msg /= ""
     then do
-      putStrLn msg
+      drawMessage level
       getLine
       end
     else end

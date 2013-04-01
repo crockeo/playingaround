@@ -2,6 +2,12 @@ module Graphics where
 
 import Level
 
+-- Drawing the message
+drawMessage :: Level -> IO ()
+drawMessage level = do
+  putStrLn "\n\n"
+  putStrLn $ getMessag level
+
 -- Drawing all choices
 drawChoices :: [String] -> Int -> IO ()
 drawChoices [] n = return ()
@@ -12,7 +18,6 @@ drawChoices (x:xs) n = do
 -- Drawing a level
 drawLevel :: Level -> IO ()
 drawLevel level = do
-  putStrLn "\n\n"
-  putStrLn $ getMessage level
+  drawMessage level
   drawChoices (getChoices level) 0
   putStr ": "
