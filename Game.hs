@@ -1,6 +1,7 @@
 module Game where
 
 import LevelLoader
+import Graphics
 import Level
 
 -- Starting the game
@@ -18,24 +19,9 @@ updateGame level input
   | input < 1 = return level
   | otherwise = return $ getSubLevel level (input - 1)
 
-drawChoices :: Level -> Int -> IO ()
-drawChoices level index
-  | index >= (length $ getChoices level) = return ()
-  | otherwise = do
-    putStrLn (show (index + 1) ++ ". " ++ (getChoice level index))
-    drawChoices level (index + 1)
-
-drawGame :: Level -> IO ()
-drawGame level = do
-  putStrLn "\n\n"
-  putStrLn $ getMessage level
-  drawChoices level 0
-  putStr ": "
-
 gameLoop :: Level -> IO Int
-gameLoop level
-  | isEnd level = end
-  | otherwise = do
-    drawGame level
-    input <- getLine
-    updateGame level (read input) >>= gameLoop
+gameLoop (Level _ _ _ True) =  end
+gameLoop level = do
+  drawLevel level
+  input <- getLine
+  updateGame level (read input) >>= gameLoop
