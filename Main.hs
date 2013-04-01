@@ -9,7 +9,7 @@ configLoc = "config.cfg"
 
 -- Loading the filename from a file string
 loadFileName :: FilePath -> IO String
-loadFileName path = readFile FilePath
+loadFileName path = readFile path
 
 main :: IO Int
 main = do
