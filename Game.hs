@@ -20,7 +20,7 @@ updateGame level input
   | otherwise = return $ getSubLevel level (input - 1)
 
 gameLoop :: Level -> IO Int
-gameLoop (Level msg _ _ True) = do
+gameLoop level@(Level msg _ _ True) = do
   if msg /= ""
     then do
       drawMessage level
